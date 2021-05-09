@@ -1,6 +1,6 @@
 {
   "name": "gbc-cicd",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "dist/themenu-cicd.bundle.js",
   "license": "MIT",
   "engines": {
@@ -26,7 +26,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hyun04p/gaebokchi-cicd"
+    "url": "https://github.com/hyun04p/gbc-cicd"
+  },
+  "bugs": {
+    "url": "https://github.com/hyun04p/gbc-cicd/issues"
   },
   "keywords": [
     "cicd",
