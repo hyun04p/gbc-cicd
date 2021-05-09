@@ -53,7 +53,7 @@ let appState = {
 app.use('/auth', AuthRouter);
 app.use('/build', authMiddleWare, BuildRouter);
 
-app.use('/', express.static('dist/static'));
+app.use('/', express.static(path.join(__dirname, '/dist/static')));
 
 function authMiddleWare(req, res, next) {
   if (

@@ -1,10 +1,10 @@
 {
   "name": "gbc-cicd",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "main": "dist/themenu-cicd.bundle.js",
   "license": "MIT",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 14.16.0"
   },
   "scripts": {
     "build": "webpack",

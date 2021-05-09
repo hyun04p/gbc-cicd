@@ -6,11 +6,11 @@ Very light cicd server
 
 Global installation with npm is recomanded
 
-### `npm install -g gbc-cicd`
+### `sudo npm install -g gbc-cicd`
 
 ## Availble Scripts
 
-### `gbc <mode> <port> <configPath>`
+### `sudo gbc <mode> <port> <configPath>`
 
 Start the cicd server with default setting
 
