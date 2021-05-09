@@ -1,5 +1,5 @@
 {
-  "name": "gaebokchi-cicd",
+  "name": "gbc-cicd",
   "version": "1.0.0",
   "main": "dist/themenu-cicd.bundle.js",
   "license": "MIT",
