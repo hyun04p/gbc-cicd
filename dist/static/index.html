@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="/index.css" />
+    <title>GBC-CICD</title>
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <div class="container" id="login-container">
+      <h1>LOGIN</h1>
+      <input placeholder="Password" type="password" id="pw-field" />
+      <button id="login-btn">LOGIN</button>
+    </div>
+    <div id="panel-container">
+      <h1>🐡 GBC CICD 🐡</h1>
+      <div>
+        <button id="build-btn">🐡BUILD🐡</button>
+      </div>
+      <div>
+        <span>Status: </span>
+        <span id="status"></span>
+      </div>
+      <div id="return-msg-title">LOG:</div>
+      <p id="return-msg"></p>
+    </div>
+    <script src="/sha256.js"></script>
+    <script src="/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#pw-field {
+  height: 30px;
+  width: 200px;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+#panel-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+#build-btn {
+  height: 50px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#return-msg-title {
+  margin-top: 20px;
+}
+
+#return-msg {
+  background-color: #eee;
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  margin: 10px 0px 50px 0px;
+
+  min-height: 300px;
+}
