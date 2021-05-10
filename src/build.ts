@@ -2,16 +2,11 @@ import express from 'express';
 import * as fs from 'fs';
 import child_process from 'child_process';
 import { config, appState } from './server';
-import { Z_FIXED } from 'node:zlib';
 
 let BuildRouter = express.Router();
 let currentBuild = '';
 
-BuildRouter.get('/trigger', (req, res) => {
-  if (appState.isBuilding) {
-    res.json({ message: 'already building' });
-    return;
-  }
+function build() {
   appState.isBuilding = true;
 
   const now = new Date();
@@ -26,6 +21,23 @@ BuildRouter.get('/trigger', (req, res) => {
       appState.isBuilding = false;
     }
   );
+}
+
+BuildRouter.post('/github-webhook', (req, res) => {
+  if (appState.isBuilding) {
+    res.status(200);
+    return;
+  }
+  build();
+  res.status(200);
+});
+
+BuildRouter.get('/trigger', (req, res) => {
+  if (appState.isBuilding) {
+    res.json({ message: 'already building' });
+    return;
+  }
+  build();
   res.status(200).json({ message: 'start building' });
 });
 

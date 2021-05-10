@@ -1,6 +1,6 @@
 {
   "name": "gbc-cicd",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "main": "dist/themenu-cicd.bundle.js",
   "license": "MIT",
   "engines": {
@@ -12,6 +12,7 @@
     "reset": "node ./dist/themenu-cicd.bundle.js reset"
   },
   "dependencies": {
+    "chalk": "^4.1.1",
     "express": "^4.17.1"
   },
   "devDependencies": {

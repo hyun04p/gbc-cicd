@@ -10,6 +10,8 @@ const NACL = 'NACL';
 let statusPulling;
 let msgPulling;
 let token = '';
+let isBuilding = false;
+
 function setToken(newToken) {
   if (newToken === '') {
     loginContainer.style.display = 'flex';
@@ -70,7 +72,7 @@ buildBtn.onclick = () => {
 };
 
 function updateLog() {
-  if (token === '') {
+  if (token === '' || !isBuilding) {
     clearInterval(logPulling);
   }
   fetch('/build/log', {
@@ -109,9 +111,11 @@ function updateStatus() {
       if (json.status === 'BUILDING') {
         status.innerText = '🔵 BUILDING';
         status.className = 'blue-txt';
+        isBuilding = true;
       } else if (json.status === 'IDLE') {
         status.innerText = '🟢 IDLE';
         status.className = 'green-txt';
+        isBuilding = false;
       }
     });
 }

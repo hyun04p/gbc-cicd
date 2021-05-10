@@ -1,7 +1,6 @@
 import express from 'express';
 import sha256 from './sha256.js';
 import { config, appState } from './server';
-import url from 'url';
 var AuthRouter = express.Router();
 
 const NACL = 'NACL';

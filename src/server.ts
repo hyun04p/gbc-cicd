@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
 import express from 'express';
-import fs from 'fs';
+import * as fs from 'fs';
 import AuthRouter from './auth';
 import BuildRouter from './build';
 import os from 'os';
 import path from 'path';
+import * as setup from './Setup';
+import * as strTemplate from './StringTemplate';
+import sha256 from './sha256';
 
 const app = express();
 app.use(express.json());
@@ -17,29 +20,12 @@ const configDirPath =
   process.argv[4] === undefined ? `${os.homedir()}/gbc` : `${process.argv[4]}`;
 const configFilePath = `${configDirPath}/gbc.config.json`;
 
-if (MODE === 'reset' || !fs.existsSync(configDirPath)) {
-  fs.rmSync(configDirPath, { recursive: true, force: true });
-  fs.rmSync(`${configDirPath}/log`, { recursive: true, force: true });
-  fs.mkdirSync(configDirPath);
-  fs.mkdirSync(`${configDirPath}/log`);
-  fs.closeSync(fs.openSync(configFilePath, 'w'));
-  fs.writeFileSync(
-    configFilePath,
-    `{
-  "password": "test",
-  "logFilePath": "${path.join(configDirPath, 'log')}",
-  "buildScriptPath": "${path.join(configDirPath, 'build.sh')}"
-}`
-  );
-  fs.writeFileSync(
-    `${path.join(configDirPath, 'build.sh')}`,
-    `#!/bin/bash 
-
-echo "Hi GBC~"
-sleep 5
-echo "done"
-  `
-  );
+if (
+  MODE === 'reset' ||
+  !fs.existsSync(configDirPath) ||
+  !fs.existsSync(configFilePath)
+) {
+  setup.initConfigDir(configDirPath);
 }
 
 const config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
@@ -52,26 +38,37 @@ let appState = {
 
 app.use('/auth', AuthRouter);
 app.use('/build', authMiddleWare, BuildRouter);
-
-app.use('/', express.static(path.join(__dirname, '/dist/static')));
+app.use('/', express.static(path.join(__dirname, '/static')));
 
 function authMiddleWare(req, res, next) {
+  console.log(req.header('X-Hub-Signature-256') + ' ' + config.webhookSecret);
   if (
-    appState.authToken !== null &&
-    req.header('gaebokchi-token') === appState.authToken
+    req.header('X-Hub-Signature-256') === sha256(config.webhookSecret) ||
+    (appState.authToken !== null &&
+      req.header('gaebokchi-token') === appState.authToken)
   ) {
     next();
   } else {
     res.json({
       message: 'unauthorized',
+      tes: config.webhookSecret,
+      test: sha256(config.webhookSecret),
+      req: req.header('X-Hub-Signature-256'),
     });
     return;
   }
 }
 
+function logMiddleware(req, res, next) {}
+
 app.listen(PORT, () => {
   console.log(
-    `GBC CICD Server Listening to Port: ${PORT}\nInitial Password: ${config.password}`
+    strTemplate.welcomeMsg(
+      PORT,
+      config.password,
+      configDirPath,
+      config.webhookSecret
+    )
   );
 });
 
