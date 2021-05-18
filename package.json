@@ -1,6 +1,6 @@
 {
   "name": "gbc-cicd",
-  "version": "1.0.9",
+  "version": "1.0.20",
   "main": "dist/themenu-cicd.bundle.js",
   "license": "MIT",
   "engines": {

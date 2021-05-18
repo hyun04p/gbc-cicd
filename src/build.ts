@@ -25,11 +25,14 @@ function build() {
 
 BuildRouter.post('/github-webhook', (req, res) => {
   if (appState.isBuilding) {
-    res.status(200);
+    res.json({
+      message: 'already building',
+    });
     return;
   }
   build();
-  res.status(200);
+  res.json({ message: 'start building' });
+  return;
 });
 
 BuildRouter.get('/trigger', (req, res) => {

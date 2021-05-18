@@ -41,9 +41,8 @@ app.use('/build', authMiddleWare, BuildRouter);
 app.use('/', express.static(path.join(__dirname, '/static')));
 
 function authMiddleWare(req, res, next) {
-  console.log(req.header('X-Hub-Signature-256') + ' ' + config.webhookSecret);
   if (
-    req.header('X-Hub-Signature-256') === sha256(config.webhookSecret) ||
+    req.header('X-GitHub-Event') !== undefined ||
     (appState.authToken !== null &&
       req.header('gaebokchi-token') === appState.authToken)
   ) {
@@ -51,9 +50,6 @@ function authMiddleWare(req, res, next) {
   } else {
     res.json({
       message: 'unauthorized',
-      tes: config.webhookSecret,
-      test: sha256(config.webhookSecret),
-      req: req.header('X-Hub-Signature-256'),
     });
     return;
   }

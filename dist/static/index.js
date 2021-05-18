@@ -72,7 +72,7 @@ buildBtn.onclick = () => {
 };
 
 function updateLog() {
-  if (token === '' || !isBuilding) {
+  if (token === '') {
     clearInterval(logPulling);
   }
   fetch('/build/log', {
